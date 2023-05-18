@@ -1,10 +1,12 @@
-FROM node:18-alpine
+FROM node:18-alpine as builder
 
 WORKDIR /code
 
+ADD package.json package-lock.json /code/
+RUN npm install 
+
 ADD . /code
-RUN npm install && npm run build
+RUN npm run build
 
-CMD npx serve -s dist
-
-EXPOSE 3000
+FROM nginx:alpine
+COPY --from=builder code/dist /usr/share/nginx/html
