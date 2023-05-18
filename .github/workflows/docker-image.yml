@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: sudo cd simple && sudo docker-compose up --build -d
+      run: sudo docker-compose -f ./simple/docker-compose.yaml up --build -d
